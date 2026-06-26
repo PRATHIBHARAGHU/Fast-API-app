@@ -35,3 +35,24 @@
 - Middleware -- {request processing pipeline}
 - Schema -- {Static models for validation}
 
+# database
+## relational databases
+- mysql
+- postgressql
+- sqlite
+- sql server
+
+## non-relational databases
+- mongoDB
+- dynamodb
+- redis
+- cassandra
+
+
+# constraints in database {imp}
+- primary key --eg: student_id, staff_id
+- foriegn key --eg: department_id in std table
+- unique --eg: email
+- not null --eg: name
+- check --eg: salary>0
+- default --eg: timestamp: func.now()
