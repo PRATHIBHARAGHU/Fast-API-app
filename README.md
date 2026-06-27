@@ -56,3 +56,6 @@
 - not null --eg: name
 - check --eg: salary>0
 - default --eg: timestamp: func.now()
+
+# API
+- Swagger AI -- validation of API

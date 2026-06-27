@@ -1,9 +1,14 @@
 from pydantic import BaseModel
 from typing import Optional
 
-class CompanyCreate(BaseModel):
+class CompanyBase(BaseModel):
     name:str
-    location:str
+    email:str
+    phone:str
+    
+
+class CompanyCreate(BaseModel):
+    pass
 
 class CompanyUpdate(BaseModel):
     name: Optional[str] = None

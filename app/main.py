@@ -1,10 +1,12 @@
 from fastapi import FastAPI
 
-from routers import company
+from routers import company,job
+from database import engine,Base
 
-from routers import job
+app = FastAPI() 
+print(engine)
 
-app = FastAPI()
+Base.metadata.create_all(bind=engine) # create the tables in the database if they do not exist already
 
 app.include_router(company.router)
 app.include_router(job.router)
