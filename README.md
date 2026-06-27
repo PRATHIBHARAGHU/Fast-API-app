@@ -57,5 +57,19 @@
 - check --eg: salary>0
 - default --eg: timestamp: func.now()
 
-# API
+# Modules
+- SQLAlchemy -- orm (object Relational mappinng)
+- fastapi -- web framework
+- uvicorn -- server for running fastapi application ---> "uvicorn app.main:app --reload"
+- psycopg2 -- postgresql driver
 - Swagger AI -- validation of API
+- Pydantic -- Data validation
+- typing-extensions -- type hints
+
+# Concepts:
+- ORM 
+    - Object Mapping -->to convert pythonm code to sql commands without writing SQL commands
+    - Dependancy injection -->To install dependencies into router handlers
+    - Session maker - To create a session with Database
+    - SessionLocal - To create session with the database for a single request
+    - declarative_base - To create a base class for all the models

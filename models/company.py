@@ -1,8 +1,9 @@
 from typing import Optional
 
 from pydantic import BaseModel
-from sqlalchemy import Column,Integer,String,Enum,relationship
-from database import Base,engine,Sessionlocal
+from sqlalchemy import Column,Integer,String,Enum
+from sqlalchemy.orm import relationship
+from database import Base,engine,SessionLocal
 
 class CompanyBase(Base):
     __tablename__="companies"
