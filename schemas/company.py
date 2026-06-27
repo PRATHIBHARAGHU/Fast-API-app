@@ -1,11 +1,6 @@
 from pydantic import BaseModel
 from typing import Optional
-
-class CompanyBase(BaseModel):
-    name:str
-    email:str
-    phone:str
-    
+from .job import JobResponse
 
 class CompanyCreate(BaseModel):
     pass
@@ -13,4 +8,25 @@ class CompanyCreate(BaseModel):
 class CompanyUpdate(BaseModel):
     name: Optional[str] = None
     location: Optional[str] = None
+
+class CompanyBase(BaseModel):
+    name:str
+    email:str
+    phone:str
+
+class CompanyUpdate(CompanyBase):
+    name:Optional[str]=None
+    email:Optional[str]=None
+    phone:Optional[str]=None
+
+class CompanyResponse(BaseModel):
+    id:int
+    jobs:list[JobResponse]
+
+    class Config:                     
+        from_attributes=True         # Read data from SQLAlchemy models and convert it to Pydantic models
+
+
+
+
     

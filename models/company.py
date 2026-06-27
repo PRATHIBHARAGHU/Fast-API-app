@@ -1,3 +1,6 @@
+from typing import Optional
+
+from pydantic import BaseModel
 from sqlalchemy import Column,Integer,String,Enum,relationship
 from database import Base,engine,Sessionlocal
 
@@ -8,4 +11,4 @@ class CompanyBase(Base):
     email=Column(String,unique=True)
     phone=Column(String,unique=True)
     jobs=relationship("JobBase",back_populates="company")
-
+    
