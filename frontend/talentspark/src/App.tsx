@@ -5,7 +5,7 @@ import JobCard from './components/JobCard';
 import Footer from './components/Footer';
 import {useEffect, useState } from 'react';
 import {getCompanies} from "./Services/CompanyService"
-import {Company} from './types/company';
+import type {Company} from './types/company';
 
 function App(){
   const[loading, setLoading] = useState(true);
@@ -18,14 +18,14 @@ function App(){
       const companies = await getCompanies();
       setCompanies(companies);
     }catch(error){
-      setError(error);
+      setError(error as Error);
     } finally {
       setLoading(false)
     }
   }
-  useEffect{() => {
+  useEffect(()=>{
     fetchCompanies();
-  }, []};
+  }, []);
   
   if(loading){
     return <div>Loading....</div>
@@ -35,13 +35,13 @@ function App(){
     return <div>Error: {error.message}</div>
   }
 
-
+  
   return(
     <div>
       <Navbar />
       <Welcome />
       <br />
-      <CompanyCard key={companies.id}companies={companies}/>
+      <CompanyCard companies={companies}/>
       <br />
       <JobCard />
       <br />

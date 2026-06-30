@@ -2,8 +2,16 @@ from fastapi import FastAPI
 from routers import company,job
 from database import engine,Base
 from models import job as job_model,company as company_model
+from fastapi.middleware.cors import CORSMiddleware
+
 app = FastAPI() 
-print(engine)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"]
+)
 
 # Base.metadata.create_all(bind=engine) # create the tables in the database if they do not exist already
 
