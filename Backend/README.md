@@ -103,3 +103,10 @@
 - npm create vite@latest-talentspark  ---> down arrow -->react --> typescript.
 
 http://localhost:5173/
+
+
+# for user authentication in JWT
+- pip install passlib
+- pip install python-jose[cryptography]
+
+## Utils 
