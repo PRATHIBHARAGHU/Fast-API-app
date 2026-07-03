@@ -3,12 +3,12 @@ from schemas.job import JobCreate, JobUpdate,JobResponse
 from models.job import Job
 from sqlalchemy.orm import Session
 from database import get_db
-from utils.oauth2 import get_current_user, role_required
+from utils.oauth2 import role_required,get_current_user
 
 router = APIRouter(prefix="/job", tags=["job"])
 
 @router.post("/",status_code=status.HTTP_201_CREATED,response_model=JobResponse)
-def create_job(job: JobCreate,db:Session=Depends(get_db),current_user=Depends(role_required(["admin"]))):
+def create_job(job: JobCreate,db:Session=Depends(get_db),current_user=Depends(role_required(["admin","hr"]))):
     db_job = Job(**job.dict())
     db.add(db_job)
     db.commit()
@@ -28,7 +28,7 @@ def get_job(job_id: int,db:Session=Depends(get_db),current_user=Depends(get_curr
     return job
 
 @router.put("/{job_id}",status_code=status.HTTP_201_CREATED,response_model=JobResponse)
-def update_job(job_id: int, job: JobUpdate,db:Session=Depends(get_db),current_user=Depends(role_required(["admin"]))):
+def update_job(job_id: int, job: JobUpdate,db:Session=Depends(get_db),current_user=Depends(role_required(["admin","hr"]))):
     db_job = db.query(Job).filter(Job.id == job_id).first()
     if not db_job:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Job not found")
@@ -39,7 +39,7 @@ def update_job(job_id: int, job: JobUpdate,db:Session=Depends(get_db),current_us
     return db_job
 
 @router.delete("/{job_id}",status_code=status.HTTP_204_NO_CONTENT)
-def delete_job(job_id: int,db:Session=Depends(get_db),current_user=Depends(role_required(["admin"]))):
+def delete_job(job_id: int,db:Session=Depends(get_db),current_user=Depends(role_required(["admin","hr"]))):
     db_job = db.query(Job).filter(Job.id == job_id).first()
     if not db_job:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Job not found")
