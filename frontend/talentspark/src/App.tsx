@@ -6,11 +6,13 @@ import Footer from "./components/Footer";
 import {useEffect,useState} from "react";
 import { getCompanies,updateCompany,deleteCompany,createCompany } from "./Services/CompanyService";
 import type {Company} from "./types/company"
+import ChatPage from "./pages/chat";
 
 function App(){
   const [loading,setLoading] = useState(true);
   const [error,setError] = useState<Error | null>(null)
   const [companies,setCompanies] = useState<Company[]>([]);
+  
 
   async function fetchCompanies() {
     setLoading(true);
@@ -23,6 +25,7 @@ function App(){
       setLoading(false);
     }
   }
+
 
   async function handleEdit(company:Company){
     try{
@@ -76,6 +79,7 @@ function App(){
     onadd={handleAdd}
     />
     <JobCard />
+    <ChatPage />
     <Footer />
     </>
   )
