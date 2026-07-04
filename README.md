@@ -14,9 +14,11 @@
 ## Architecture
 backend/
     app/
-        -- main.py
-        -- database.py
-    models/
+        -- main.py   ------> Entry point creates fastapi app
+        register all routers
+        -- database.py  --------> Database connection (PostgreSQL + )
+    SQLALCHEMY
+    models/  -------> 
         -- users.py
         -- company.py
         -- job.py
