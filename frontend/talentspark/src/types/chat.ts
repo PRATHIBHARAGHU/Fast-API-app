@@ -1,13 +1,15 @@
-export interface ChatMessage {
-  role: "user" | "assistant";
-  content: string;
+interface ChatMessage {
+    role: "user" | "bot";
+    content: string;
 }
 
-export interface ChatRequest {
-  message: string;
-  session_id?: string;
+interface ChatRequest {
+    message: string;
+    session_id: string;
 }
 
-export interface ChatResponse {
-  response: string;
+interface ChatResponse {
+    response: string;
 }
+
+export type { ChatMessage, ChatRequest, ChatResponse }
