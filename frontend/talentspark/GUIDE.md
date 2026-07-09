@@ -15,7 +15,7 @@ frontend/talentspark/src/
 │   ├── job.ts                  ← Job interface
 │   ├── user.ts                 ← LoginRequest, LoginResponse, RegisterRequest, RegisterResponse
 │   └── chat.ts                 ← ChatMessage, ChatRequest, ChatResponse
-├── Services/                   ← API call functions (talk to backend)
+├── Services/                   ← API call functions (talk to Backend)
 │   ├── api.ts                  ← Axios instance with base URL + auth interceptor
 │   ├── CompanyService.ts       ← CRUD functions for /company
 │   ├── JobService.ts           ← CRUD functions for /job
@@ -50,13 +50,13 @@ User opens app
 
 ## Phase 1: Display Company & Job Data (Basic Frontend)
 
-> Goal: Fetch data from the backend and display it in cards
+> Goal: Fetch data from the Backend and display it in cards
 
 ### Step 1: Create TypeScript Types
 
 **Files: `types/company.ts`, `types/job.ts`**
 
-Define the shape of data coming from the backend:
+Define the shape of data coming from the Backend:
 
 ```typescript
 // types/company.ts
@@ -104,7 +104,7 @@ One axios instance used by ALL services → token is auto-attached.
 
 **Files: `Services/CompanyService.ts`, `Services/JobService.ts`**
 
-Each service file has functions that call backend endpoints:
+Each service file has functions that call Backend endpoints:
 
 ```typescript
 // CompanyService.ts
@@ -215,7 +215,7 @@ export const register = async (user: RegisterRequest): Promise<RegisterResponse>
 };
 ```
 
-**Important**: Login sends form-encoded data (not JSON) because the backend uses `OAuth2PasswordRequestForm`.
+**Important**: Login sends form-encoded data (not JSON) because the Backend uses `OAuth2PasswordRequestForm`.
 
 ### Step 3: Create Login & Register Pages
 
@@ -268,7 +268,7 @@ Login form submit
 
 **File: `Services/api.ts`**
 
-If the token expires, the backend returns 401. The interceptor catches this:
+If the token expires, the Backend returns 401. The interceptor catches this:
 
 ```typescript
 api.interceptors.response.use(
@@ -319,7 +319,7 @@ interface ChatResponse {
 }
 ```
 
-`role` is frontend-only — the backend manages its own HumanMessage/AIMessage via LangChain.
+`role` is frontend-only — the Backend manages its own HumanMessage/AIMessage via LangChain.
 
 ### Step 2: Create Chat Service
 
@@ -346,7 +346,7 @@ function Chat() {
     const handleSend = async (e: React.FormEvent) => {
         // 1. Add user message to the list
         setMessages(prev => [...prev, { role: "user", content: input }]);
-        // 2. Call backend
+        // 2. Call Backend
         const response = await askCareerChat(input, sessionId);
         // 3. Add bot response to the list
         setMessages(prev => [...prev, { role: "bot", content: response }]);
@@ -358,7 +358,7 @@ function Chat() {
 }
 ```
 
-**Session ID**: Generated once when Chat component mounts (`"session_" + timestamp`). The backend uses this to keep conversation history separate per session.
+**Session ID**: Generated once when Chat component mounts (`"session_" + timestamp`). The Backend uses this to keep conversation history separate per session.
 
 ### Step 4: Add Navigation in App.tsx
 
@@ -397,7 +397,7 @@ npm run dev
 # 3. Open in browser
 # http://localhost:5173
 
-# Make sure the backend is running on http://localhost:8000
+# Make sure the Backend is running on http://localhost:8000
 ```
 
 ---

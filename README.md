@@ -13,7 +13,7 @@ In ubuntu . env/bin/activate
 
 
 ## Architecture
-backend/
+Backend/
     app/
         -- main.py   ------> Entry point creates fastapi app
         register all routers

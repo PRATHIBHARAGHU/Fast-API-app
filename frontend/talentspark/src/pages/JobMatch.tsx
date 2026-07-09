@@ -72,7 +72,7 @@ function JobMatch() {
                         type="text"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        placeholder="Search jobs... e.g. 'python backend developer'"
+                        placeholder="Search jobs... e.g. 'python Backend developer'"
                         style={{ marginBottom: 0 }}
                     />
                     <button onClick={handleSearch} disabled={loading || !searchQuery.trim()}>

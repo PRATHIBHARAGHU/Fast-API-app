@@ -10,7 +10,7 @@ AWS offers a **12-Month Free Tier** for new accounts. To ensure your deployment 
 
 | AWS Service | Free Tier Limit (Monthly) | Deployment Usage |
 | :--- | :--- | :--- |
-| **Elastic Beanstalk / EC2** | 750 hours of `t2.micro` or `t3.micro` instances | Runs your FastAPI backend + React frontend container. |
+| **Elastic Beanstalk / EC2** | 750 hours of `t2.micro` or `t3.micro` instances | Runs your FastAPI Backend + React frontend container. |
 | **Amazon RDS** | 750 hours of `db.t3.micro` (PostgreSQL) | Runs your relational database (instead of containerized DB). |
 | **Amazon S3** | 5 GB of standard storage | Used to store resume files or static attachments. |
 | **Application Load Balancer** | 15 LCUs (Load Balancer capacity units) | Routes traffic to your instances (optional, DNS is free). |
@@ -46,8 +46,8 @@ Create a file named `docker-compose-prod.yml` containing:
 version: '3.8'
 
 services:
-  backend:
-    image: <your-dockerhub-username>/fastapiapp-backend:latest
+  Backend:
+    image: <your-dockerhub-username>/fastapiapp-Backend:latest
     ports:
       - "80:8000"
     environment:
@@ -75,15 +75,15 @@ services:
 # Log in to Docker Hub
 docker login
 
-# Build production backend image
-docker build -t <your-dockerhub-username>/fastapiapp-backend:latest ./backend
+# Build production Backend image
+docker build -t <your-dockerhub-username>/fastapiapp-Backend:latest ./Backend
 
 # Build production frontend image (replace API URL with your AWS environment URL)
 docker build -t <your-dockerhub-username>/talentspark-frontend:latest \
   --build-arg VITE_API_URL=http://your-beanstalk-env.elasticbeanstalk.com ./frontend/talentspark
 
 # Push to registry
-docker push <your-dockerhub-username>/fastapiapp-backend:latest
+docker push <your-dockerhub-username>/fastapiapp-Backend:latest
 docker push <your-dockerhub-username>/talentspark-frontend:latest
 ```
 
@@ -117,8 +117,8 @@ If users upload resumes, you must store them in an S3 bucket (local files in a c
 1. Search for **S3** in the AWS Console and click **Create bucket**.
 2. Set a globally unique name: `talentspark-resumes-bucket`.
 3. Keep **Block all public access** checked (safer).
-4. Update your backend code to upload files using `boto3` instead of saving to local paths.
-5. In AWS, create an IAM user with `AmazonS3FullAccess` permission, generate an access key, and pass it to your backend containers:
+4. Update your Backend code to upload files using `boto3` instead of saving to local paths.
+5. In AWS, create an IAM user with `AmazonS3FullAccess` permission, generate an access key, and pass it to your Backend containers:
    - `AWS_ACCESS_KEY_ID`
    - `AWS_SECRET_ACCESS_KEY`
    - `AWS_S3_BUCKET_NAME` = `talentspark-resumes-bucket`
@@ -150,9 +150,9 @@ If you want to deploy without entering a credit card or risk running into AWS bi
   2. Click **New +** → **Web Service**.
   3. Connect your GitHub repository.
   4. Select **Docker** as the runtime.
-  5. Specify the Dockerfile path: `backend/Dockerfile`.
+  5. Specify the Dockerfile path: `Backend/Dockerfile`.
   6. Add your Environment variables (like `DATABASE_URL`, `GROQ_API_KEY`, etc.) in the dashboard.
-  7. Render will build and deploy your backend container. It will give you a public URL (e.g., `https://talentspark-backend.onrender.com`).
+  7. Render will build and deploy your Backend container. It will give you a public URL (e.g., `https://talentspark-Backend.onrender.com`).
   *Note: Free instances spin down after 15 minutes of inactivity, causing a 50-second delay on the first request.*
 
 ### 4. Frontend: Render / Vercel (Free Static Site)
@@ -162,5 +162,5 @@ If you want to deploy without entering a credit card or risk running into AWS bi
   2. Connect your GitHub repository.
   3. Set build command: `npm run build` (make sure to specify working directory `frontend/talentspark` in settings).
   4. Set publish directory: `dist`.
-  5. Add Environment Variable: `VITE_API_URL` set to your live Render backend URL (`https://talentspark-backend.onrender.com`).
+  5. Add Environment Variable: `VITE_API_URL` set to your live Render Backend URL (`https://talentspark-Backend.onrender.com`).
   6. Click deploy. It will give you a public URL (e.g., `https://talentspark.onrender.com`).

@@ -46,12 +46,12 @@ Used for diagnosing issues and verifying container health.
 | `docker logs` | View the output logs of a container. | `docker logs my-container-name` |
 | `docker logs -f` | Follow/stream container logs in real time. | `docker logs -f my-container-name` |
 | `docker logs --tail N`| Show only the last N lines of logs. | `docker logs --tail 100 my-container-name` |
-| `docker exec -it` | Open an interactive terminal session inside a running container. | `docker exec -it fastapiapp-backend bash` (or `sh`) |
-| `docker inspect` | Return low-level configuration details of a container/image (JSON). | `docker inspect fastapiapp-backend` |
-| `docker top` | Display the running processes of a container. | `docker top fastapiapp-backend` |
+| `docker exec -it` | Open an interactive terminal session inside a running container. | `docker exec -it fastapiapp-Backend bash` (or `sh`) |
+| `docker inspect` | Return low-level configuration details of a container/image (JSON). | `docker inspect fastapiapp-Backend` |
+| `docker top` | Display the running processes of a container. | `docker top fastapiapp-Backend` |
 | `docker stats` | Stream live CPU, memory, network, and disk I/O usage stats. | `docker stats` |
 | `docker cp` | Copy files/folders between a container and the host filesystem. | `docker cp host_file.txt my-container:/app/container_file.txt` |
-| `docker port` | List port mappings or show the host port mapped to a container port. | `docker port fastapiapp-backend` |
+| `docker port` | List port mappings or show the host port mapped to a container port. | `docker port fastapiapp-Backend` |
 
 ---
 
@@ -67,9 +67,9 @@ Docker Compose handles orchestration of multi-container systems. Run these comma
 | `docker compose down -v` | Stop containers and delete all named volumes (wipes database). | `docker compose down -v` |
 | `docker compose ps` | List all containers managed by this compose file. | `docker compose ps` |
 | `docker compose logs` | Stream logs for all services combined. | `docker compose logs -f` |
-| `docker compose logs <service>`| Stream logs for a specific service. | `docker compose logs -f backend` |
-| `docker compose exec` | Run a terminal command inside a compose service container. | `docker compose exec backend alembic upgrade head` |
-| `docker compose restart` | Restart compose services. | `docker compose restart backend` |
+| `docker compose logs <service>`| Stream logs for a specific service. | `docker compose logs -f Backend` |
+| `docker compose exec` | Run a terminal command inside a compose service container. | `docker compose exec Backend alembic upgrade head` |
+| `docker compose restart` | Restart compose services. | `docker compose restart Backend` |
 | `docker compose build` | Build or rebuild services defined in the compose file. | `docker compose build` |
 | `docker compose config` | Validate and view the resolved configuration in YAML format. | `docker compose config` |
 
@@ -129,11 +129,11 @@ docker compose up -d --build
 ```
 
 ### Debugging Backend startup crashes
-If your backend container immediately exits, view container logs or run container interactively:
+If your Backend container immediately exits, view container logs or run container interactively:
 ```bash
 # View last logs
-docker logs fastapiapp-backend
+docker logs fastapiapp-Backend
 
 # Override default entrypoint to open a shell and check dependencies manually
-docker run -it --entrypoint sh fastapiapp-backend
+docker run -it --entrypoint sh fastapiapp-Backend
 ```

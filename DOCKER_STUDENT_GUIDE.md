@@ -1,6 +1,6 @@
 # 🐳 Complete Docker & AWS Elastic Beanstalk Student Guide
 
-Welcome to the ultimate guide on containerization and cloud deployment! This document is designed to take you from a complete beginner to confidently running a full-stack application (FastAPI backend + React frontend + PostgreSQL database) locally and deploying it live on AWS Elastic Beanstalk.
+Welcome to the ultimate guide on containerization and cloud deployment! This document is designed to take you from a complete beginner to confidently running a full-stack application (FastAPI Backend + React frontend + PostgreSQL database) locally and deploying it live on AWS Elastic Beanstalk.
 
 ---
 
@@ -164,7 +164,7 @@ wsl --install
 
 > [!WARNING]
 > **Windows Line Ending Gotcha (CRLF vs LF)**:
-> Windows uses `\r\n` (CRLF) for newlines, while Linux uses `\n` (LF). When editing files in Windows, shell scripts or backend entry points can get corrupted with CRLF characters.
+> Windows uses `\r\n` (CRLF) for newlines, while Linux uses `\n` (LF). When editing files in Windows, shell scripts or Backend entry points can get corrupted with CRLF characters.
 > **Fix**: Configure Git on Windows to keep LF endings:
 > ```bash
 > git config --global core.autocrlf input
@@ -258,7 +258,7 @@ Before moving to the hands-on sections, here is a balanced comparison of the ben
 1. **Consistency ("Works on My Machine" Elimination)**: Docker guarantees that an application runs identically in development, testing, staging, and production environments.
 2. **Resource Efficiency**: Since containers share the host OS kernel instead of running a guest OS hypervisor, they consume drastically less memory and CPU than virtual machines.
 3. **Rapid Deployment and Startup**: Containers boot in milliseconds since they do not need to load a full OS kernel.
-4. **Microservice Architecture Alignment**: Easily split monolithic applications into separate, isolated services (e.g., frontend, backend, caching layers, DBs) communicating over private virtual networks.
+4. **Microservice Architecture Alignment**: Easily split monolithic applications into separate, isolated services (e.g., frontend, Backend, caching layers, DBs) communicating over private virtual networks.
 5. **Infrastructure as Code**: Dockerfiles and Docker Compose files are text-based, meaning they can be version-controlled in Git alongside application source code.
 
 #### 🔴 Cons (Disadvantages)
@@ -281,8 +281,8 @@ We will walk through the Docker configurations for a stack consisting of:
 
 ---
 
-### 1. Backend Dockerfile (`backend/Dockerfile`)
-Here is the production-ready [backend/Dockerfile](file:///home/sriram/Sriram_repos/fastapiapp/backend/Dockerfile):
+### 1. Backend Dockerfile (`Backend/Dockerfile`)
+Here is the production-ready [Backend/Dockerfile](file:///home/sriram/Sriram_repos/fastapiapp/Backend/Dockerfile):
 
 ```dockerfile
 # 1. Base Image selection: slim version for reduced footprint
@@ -374,7 +374,7 @@ CMD ["nginx", "-g", "daemon off;"]
 ---
 
 ### 3. Local Orchestration with `docker-compose.yml`
-Docker Compose maps out how our backend, frontend, and PostgreSQL container network together.
+Docker Compose maps out how our Backend, frontend, and PostgreSQL container network together.
 
 Here is the root [docker-compose.yml](file:///home/sriram/Sriram_repos/fastapiapp/docker-compose.yml):
 
@@ -401,11 +401,11 @@ services:
       retries: 5
 
   # FastAPI Backend Service
-  backend:
+  Backend:
     build:
-      context: ./backend
+      context: ./Backend
       dockerfile: Dockerfile
-    container_name: fastapiapp-backend
+    container_name: fastapiapp-Backend
     environment:
       - DATABASE_URL=postgresql+asyncpg://postgres:password@db:5432/student_db  # Note: Hostname is 'db', matching service name
       - SECRET_KEY=my_secret_key
@@ -417,7 +417,7 @@ services:
       db:
         condition: service_healthy  # Backend starts ONLY when PostgreSQL is ready to receive connections
     extra_hosts:
-      - "host.docker.internal:host-gateway"  # Allows backend to reach services running on the host system (like local Ollama)
+      - "host.docker.internal:host-gateway"  # Allows Backend to reach services running on the host system (like local Ollama)
 
   # React Frontend Service
   frontend:
@@ -425,12 +425,12 @@ services:
       context: ./frontend/talentspark
       dockerfile: Dockerfile
       args:
-        - VITE_API_URL=http://localhost:8000  # Injected build argument (tells React where the backend API resides)
+        - VITE_API_URL=http://localhost:8000  # Injected build argument (tells React where the Backend API resides)
     container_name: talentspark-frontend
     ports:
       - "3000:80"  # Maps host port 3000 to Nginx port 80
     depends_on:
-      - backend
+      - Backend
 
 volumes:
   postgres_data:  # Declares volume to persist data across container life cycles
@@ -511,7 +511,7 @@ Since Docker container storage is wiped clean during code updates or system cras
 3. Complete creation, click on the user -> **Security credentials** -> **Create access key**.
 4. Save the **Access Key ID** and **Secret Access Key**.
 
-#### Step 3: Implement S3 in FastAPI (`backend/app/utils/s3_storage.py`)
+#### Step 3: Implement S3 in FastAPI (`Backend/app/utils/s3_storage.py`)
 ```python
 import os
 import boto3
@@ -550,10 +550,10 @@ Create this file in the root of your project:
 version: '3.8'
 
 services:
-  backend:
-    image: <your-dockerhub-username>/fastapiapp-backend:latest
+  Backend:
+    image: <your-dockerhub-username>/fastapiapp-Backend:latest
     ports:
-      - "80:8000"  # Expose backend on port 80 to the Internet
+      - "80:8000"  # Expose Backend on port 80 to the Internet
     environment:
       - DATABASE_URL=${DATABASE_URL}
       - SECRET_KEY=${SECRET_KEY}
@@ -576,12 +576,12 @@ services:
 # Log in to Docker Hub via CLI
 docker login
 
-# Build backend and frontend images
-docker build -t <your-dockerhub-username>/fastapiapp-backend:latest ./backend
+# Build Backend and frontend images
+docker build -t <your-dockerhub-username>/fastapiapp-Backend:latest ./Backend
 docker build -t <your-dockerhub-username>/talentspark-frontend:latest --build-arg VITE_API_URL=http://<your-beanstalk-url>.elasticbeanstalk.com ./frontend/talentspark
 
 # Push the images
-docker push <your-dockerhub-username>/fastapiapp-backend:latest
+docker push <your-dockerhub-username>/fastapiapp-Backend:latest
 docker push <your-dockerhub-username>/talentspark-frontend:latest
 ```
 

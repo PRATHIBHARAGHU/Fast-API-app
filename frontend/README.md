@@ -15,7 +15,7 @@
 - Components - which are different sections of web page ----> for reusable purpose in any page by importing.
 - useeffect - which is used to call the api or which is used to fetch the data from api automaticallly when the page is loaded.
 - useState - which is used to store the data in the component and which will update the component when the data is updated or changed.
-- axios - used to call the api from backend.
+- axios - used to call the api from Backend.
 - promise - handles the asynchronous operation.
 - async/await - used to handle the asynchronous operations in a synchronous way.
 

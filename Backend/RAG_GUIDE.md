@@ -297,15 +297,15 @@ User clicks "Embed Jobs" → POST /rag/embed-jobs
 ### Flow 2: Searching Jobs (Semantic Search)
 
 ```
-User types "python backend jobs" → POST /rag/search
+User types "python Backend jobs" → POST /rag/search
         │
         ▼
     routers/rag.py: semantic_search()
         │
         ▼
-    qdrant_service.py: search_jobs("python backend jobs")
+    qdrant_service.py: search_jobs("python Backend jobs")
         │
-        ├─→ embed_text("python backend jobs")
+        ├─→ embed_text("python Backend jobs")
         │   Convert query to vector [0.11, 0.82, ...]
         │
         └─→ qdrant.query_points(query=vector)
@@ -360,7 +360,7 @@ User asks "What Python jobs pay over 80k?" → POST /rag/ask
 ## File Architecture Map
 
 ```
-backend/
+Backend/
 ├── .env                          ← QDRANT_URL, QDRANT_API_KEY, GROQ_API_KEY
 ├── services/
 │   ├── qdrant_service.py         ← Vectors: embed, store, search (fastembed + qdrant-client)

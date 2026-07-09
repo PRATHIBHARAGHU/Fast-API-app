@@ -1,13 +1,13 @@
 # Backend Guide - FastAPI Job Portal + AI Chatbot
 
-A beginner-friendly, step-by-step guide on how this backend was built.
+A beginner-friendly, step-by-step guide on how this Backend was built.
 
 ---
 
 ## Architecture Overview
 
 ```
-backend/
+Backend/
 ├── app/
 │   └── main.py              ← Entry point. Creates FastAPI app, registers all routers
 ├── database.py               ← Database connection (PostgreSQL + SQLAlchemy)
@@ -228,7 +228,7 @@ Usage in routers:
 app.add_middleware(CORSMiddleware, allow_origins=["*"], ...)
 ```
 
-This allows the frontend (running on a different port) to call the backend.
+This allows the frontend (running on a different port) to call the Backend.
 
 ---
 

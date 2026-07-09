@@ -30,14 +30,14 @@ A `401 Unauthorized` status code means the server refused to authenticate the re
    * Look at the **Headers** (specifically **Request Headers**).
    * Check for the header: `Authorization: Bearer <your-token-string>`.
      * *If missing:* Your React code is not attaching the token.
-     * *If present:* The backend is rejecting the token (wrong `SECRET_KEY`, wrong `ALGORITHM`, or token expired).
+     * *If present:* The Backend is rejecting the token (wrong `SECRET_KEY`, wrong `ALGORITHM`, or token expired).
 
 ---
 
 ## 🖨️ 3. How to Use Print Statements / Logging
 
 ### 🐍 A. In Python (FastAPI Backend)
-You can use standard `print()` statements to inspect variables on the backend.
+You can use standard `print()` statements to inspect variables on the Backend.
 
 ```python
 @router.post("/company")
@@ -58,9 +58,9 @@ async def create_company(company_data: CompanyCreate, db: AsyncSession = Depends
 
 #### How to see `print()` output:
 * **If running locally (`uvicorn`):** Look directly at the terminal window where uvicorn is running.
-* **If running in Docker Compose:** Run the logs command to follow the backend container's output:
+* **If running in Docker Compose:** Run the logs command to follow the Backend container's output:
   ```bash
-  docker-compose logs -f backend
+  docker-compose logs -f Backend
   ```
 
 ---
@@ -97,10 +97,10 @@ const fetchJobs = async () => {
 
 | Status Code | Meaning | What is usually wrong? | How to fix |
 | :--- | :--- | :--- | :--- |
-| **`422 Unprocessable Entity`** | Data validation failed | The frontend sent a payload that doesn't match the Pydantic schema on the backend (e.g., missing required fields, wrong data type). | Look at the **Network Tab → Response** payload. FastAPI returns details about exactly which field failed validation. |
-| **`403 Forbidden`** | Permission denied | The user is authenticated but does not have the required role (e.g., a Candidate attempting to call an Admin API). | Verify the user role decoded from the JWT token matches the backend route dependency. |
-| **`500 Internal Server Error`** | Server-side crash | An unhandled exception occurred in the Python code (e.g., database connection down, `NoneType` attribute access). | Check the **backend terminal/Docker logs** for a traceback (the red block of error messages showing line numbers of the crash). |
-| **`Network Error` / `ERR_CONNECTION_REFUSED`** | Server unreachable | The React app cannot reach the FastAPI server. | 1. Check if the backend is running.<br>2. Check if the port matches (`8000` vs `8080`).<br>3. Check if CORS is configured correctly in `main.py`. |
+| **`422 Unprocessable Entity`** | Data validation failed | The frontend sent a payload that doesn't match the Pydantic schema on the Backend (e.g., missing required fields, wrong data type). | Look at the **Network Tab → Response** payload. FastAPI returns details about exactly which field failed validation. |
+| **`403 Forbidden`** | Permission denied | The user is authenticated but does not have the required role (e.g., a Candidate attempting to call an Admin API). | Verify the user role decoded from the JWT token matches the Backend route dependency. |
+| **`500 Internal Server Error`** | Server-side crash | An unhandled exception occurred in the Python code (e.g., database connection down, `NoneType` attribute access). | Check the **Backend terminal/Docker logs** for a traceback (the red block of error messages showing line numbers of the crash). |
+| **`Network Error` / `ERR_CONNECTION_REFUSED`** | Server unreachable | The React app cannot reach the FastAPI server. | 1. Check if the Backend is running.<br>2. Check if the port matches (`8000` vs `8080`).<br>3. Check if CORS is configured correctly in `main.py`. |
 
 ---
 
@@ -113,7 +113,7 @@ When Python complains it cannot find a file or package, it is usually because:
 1. **Wrong Directory Structure:** You imported from `app.models` instead of `models`, or vice versa.
 2. **Missing `__init__.py`:** In older Python versions, folders without `__init__.py` are not recognized as packages.
 3. **Execution Context:** You ran the script from a subfolder instead of the project root.
-   * *Rule of thumb:* Always run commands like `uvicorn app.main:app` or `pytest` from the `/backend` folder directory.
+   * *Rule of thumb:* Always run commands like `uvicorn app.main:app` or `pytest` from the `/Backend` folder directory.
 4. **Missing Python Path:** If Alembic throws this error, check if the project directory is pushed to system path in `alembic/env.py`:
    ```python
    import sys
@@ -126,7 +126,7 @@ If your API endpoints send data but return errors or empty records, check for sp
 * **JSON Payload vs. Pydantic Model:** 
   * Frontend sends: `axios.post('/job', { companyid: 1 })`
   * Backend expects: `class JobCreate(BaseModel): company_id: int`
-  * *Result:* The backend gets `None` or throws a `422` error because `companyid` does not match `company_id` (note the underscore).
+  * *Result:* The Backend gets `None` or throws a `422` error because `companyid` does not match `company_id` (note the underscore).
 * **Endpoint URL Typos:**
   * Backend: `@router.post("/companies")`
   * Frontend: `axios.post("/company")`
@@ -191,7 +191,7 @@ Alembic keeps track of database changes. Here is how to fix the three most commo
 
 #### 2. Alembic Autogenerate is not detecting new models/tables
 * **Why it happens:** Alembic doesn't automatically scan your codebase. It only knows about models imported in `alembic/env.py`.
-* *Fix:* Open `backend/alembic/env.py` and ensure your models are imported *before* `target_metadata = Base.metadata`:
+* *Fix:* Open `Backend/alembic/env.py` and ensure your models are imported *before* `target_metadata = Base.metadata`:
   ```python
   from database import Base
   from models.company import Company

@@ -36,7 +36,7 @@ When you run `docker-compose up`, here is how your containers interact:
  │ DOCKER COMPOSE NETWORK                                                  │
  │                                                                         │
  │  ┌──────────────────────┐           ┌────────────────────────────────┐  │
- │  │  frontend container  │           │       backend container        │  │
+ │  │  frontend container  │           │       Backend container        │  │
  │  │      (Nginx)         │           │           (FastAPI)            │  │
  │  │  Exposed: 3000       │           │   Exposed: 8000                │  │
  │  └──────────────────────┘           └───────────────┬────────────────┘  │
@@ -56,9 +56,9 @@ When you run `docker-compose up`, here is how your containers interact:
 
 ## Detailed Dockerfile Explanations
 
-### 1. Backend Dockerfile (`backend/Dockerfile`)
+### 1. Backend Dockerfile (`Backend/Dockerfile`)
 
-Here is the exact code in your [backend/Dockerfile](file:///home/sriram/Sriram_repos/fastapiapp/backend/Dockerfile):
+Here is the exact code in your [Backend/Dockerfile](file:///home/sriram/Sriram_repos/fastapiapp/Backend/Dockerfile):
 
 | Command | What It Does | Why We Use It |
 | :--- | :--- | :--- |
@@ -69,7 +69,7 @@ Here is the exact code in your [backend/Dockerfile](file:///home/sriram/Sriram_r
 | `RUN apt-get update && apt-get install...` | Installs build tools and postgres client dependencies. | Required to build certain database packages like `psycopg2`. |
 | `COPY requirements.txt .` | Copies only the requirements file first. | Leverages Docker's caching mechanism (avoids reinstalling packages if requirements don't change). |
 | `RUN pip install ... -r requirements.txt` | Installs all Python dependencies. | Installs FastAPI, SQLAlchemy, asyncpg, etc. inside the container. |
-| `COPY . .` | Copies the rest of the backend files into `/app`. | Copies the code files last so that edits don't trigger rebuilding packages. |
+| `COPY . .` | Copies the rest of the Backend files into `/app`. | Copies the code files last so that edits don't trigger rebuilding packages. |
 | `EXPOSE 8000` | Informs Docker that the container listens on port 8000. | Documents the application's runtime port. |
 | `CMD ["uvicorn", "app.main:app", ...]` | Starts the FastAPI application. | Runs the uvicorn server bound to all interfaces (`0.0.0.0`) on port 8000. |
 
@@ -85,7 +85,7 @@ Here is the exact code in your [frontend/talentspark/Dockerfile](file:///home/sr
 | `COPY package*.json ./` | Copies dependency definitions. | Leverages caching for `node_modules`. |
 | `RUN npm ci` | Installs exact versions from `package-lock.json`. | Faster, reproducible, clean dependency install. |
 | `COPY . .` | Copies React source files. | Prepares code for build step. |
-| `ARG VITE_API_URL` | Declares a build-time argument. | Allows injecting the backend API URL. |
+| `ARG VITE_API_URL` | Declares a build-time argument. | Allows injecting the Backend API URL. |
 | `ENV VITE_API_URL=${VITE_API_URL}` | Sets environment variable for compile step. | Vite embeds `import.meta.env.VITE_API_URL` during build. |
 | `RUN npm run build` | Runs the compilation (`tsc && vite build`). | Compiles code into a static HTML/JS/CSS bundle in `/app/dist`. |
 | **Stage 2: Serve** | | |
@@ -107,15 +107,15 @@ Your [docker-compose.yml](file:///home/sriram/Sriram_repos/fastapiapp/docker-com
 - **Healthcheck**: Verifies that PostgreSQL is fully started up and ready to accept connections before other services start.
 - **Volume**: `postgres_data` persists database tables and records even when containers are stopped/removed.
 
-### 2. Backend Service (`backend`)
-- **Build**: Compiles `/backend` folder.
+### 2. Backend Service (`Backend`)
+- **Build**: Compiles `/Backend` folder.
 - **Environment**:
   - `DATABASE_URL`: Set to `postgresql+asyncpg://postgres:password@db:5432/student_db`. Docker automatically resolves the hostname `db` to the database container's internal IP.
 - **Depends On**: Waits for the `db` service healthcheck to pass before starting.
 - **Extra Hosts**: Maps `host.docker.internal` to the host gateway, allowing the container to access local services (like a running local Ollama instance on port 11434).
 
 ### 3. Frontend Service (`frontend`)
-- **Build**: Compiles `/frontend/talentspark` using the build argument `VITE_API_URL=http://localhost:8000` (pointing your browser to the exposed backend port).
+- **Build**: Compiles `/frontend/talentspark` using the build argument `VITE_API_URL=http://localhost:8000` (pointing your browser to the exposed Backend port).
 - **Ports**: Maps host port `3000` to Nginx container port `80` (you access the UI via `http://localhost:3000`).
 
 ---
@@ -205,7 +205,7 @@ docker compose down
 | :--- | :--- |
 | `docker compose up -d --build` | Builds/rebuilds images and starts containers in detached mode. |
 | `docker compose down` | Stops and removes all containers, networks, and volumes. |
-| `docker compose logs -f <service>` | Streams logs from a specific container (e.g. `backend`). |
+| `docker compose logs -f <service>` | Streams logs from a specific container (e.g. `Backend`). |
 | `docker compose ps` | Lists all running containers for the project. |
-| `docker compose exec backend bash` | Opens a terminal session *inside* the running backend container. |
+| `docker compose exec Backend bash` | Opens a terminal session *inside* the running Backend container. |
 | `docker system prune -a --volumes` | **Clean up**: Deletes all cached builds, unused images, and stopped containers. |

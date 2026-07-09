@@ -43,7 +43,7 @@ User Query → Embed with Google AI → Search Qdrant Cloud → Return similar j
 
 ### Step 4: Update Your `.env` File
 
-Open `backend/.env` and set these two values:
+Open `Backend/.env` and set these two values:
 
 ```
 QDRANT_URL=https://your-cluster-url.cloud.qdrant.io

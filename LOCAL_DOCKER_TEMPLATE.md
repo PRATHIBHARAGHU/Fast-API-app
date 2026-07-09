@@ -70,11 +70,11 @@ services:
     restart: always
 
   #  FastAPI Backend Service
-  backend:
+  Backend:
     build:
-      context: ./backend
+      context: ./Backend
       dockerfile: Dockerfile
-    container_name: fastapiapp-backend
+    container_name: fastapiapp-Backend
     environment:
       - DATABASE_URL=${DATABASE_URL}
       - SECRET_KEY=${SECRET_KEY}
@@ -90,7 +90,7 @@ services:
       qdrant:
         condition: service_started
     extra_hosts:
-      - "host.docker.internal:host-gateway"  # Allows backend to reach local Ollama on host
+      - "host.docker.internal:host-gateway"  # Allows Backend to reach local Ollama on host
 
   #  React Frontend Service (Nginx)
   frontend:
@@ -103,7 +103,7 @@ services:
     ports:
       - "3000:80"  # Maps host port 3000 to container port 80
     depends_on:
-      - backend
+      - Backend
 
 #  Named Volumes to preserve database state
 volumes:
