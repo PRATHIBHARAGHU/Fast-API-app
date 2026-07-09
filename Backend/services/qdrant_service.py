@@ -3,8 +3,8 @@ from dotenv import load_dotenv
 from qdrant_client import QdrantClient
 from qdrant_client.models import Distance,VectorParams,PointStruct
 from fastembed import TextEmbedding
-from sqlalchemy.ext.asynchio import AsyncSession
-from sqlalchemy.fulture import select
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy import select
 from models.job import Job
 
 load_dotenv()

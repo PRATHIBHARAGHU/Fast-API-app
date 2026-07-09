@@ -31,7 +31,7 @@ backend/
         -- users.py
         -- company.py
         -- job.py
-    utils.py/
+    utils.py/ 
         -- oauth2.py
         -- security.py
         -- token.py
@@ -63,6 +63,7 @@ langchain -> its a framework to build llm's, its useful to connect llm to extern
 
 -Vercel ---> 
 "user"://"password"
+
 
 https://meet.google.com/ens-mkxd-wgb
 

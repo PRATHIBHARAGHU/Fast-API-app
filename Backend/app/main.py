@@ -17,7 +17,7 @@ app.add_middleware(
 async def startup_event():
     from database import engine
     async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.createall)
+        await conn.run_sync(Base.metadata.create_all)
 
 
 # Base.metadata.create_all(bind=engine) # create the tables in the database if they do not exist already

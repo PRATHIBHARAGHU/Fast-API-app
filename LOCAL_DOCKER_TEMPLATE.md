@@ -1,25 +1,25 @@
-# 🐳 Fully-Local Docker & Docker Compose Template
+#  Fully-Local Docker & Docker Compose Template
 
 This document provides a template and instructions for running the **TalentSpark** full-stack application completely locally, without relying on external cloud databases (like Supabase or Qdrant Cloud).
 
 ---
 
-## 📋 1. Local `.env` Template
+##  1. Local `.env` Template
 Create an `.env` file in the root directory (where your `docker-compose.yml` sits) with the following content:
 
 ```env
-# 💾 1. Local Database Configuration
+#  1. Local Database Configuration
 POSTGRES_USER=postgres
 POSTGRES_PASSWORD=password
 POSTGRES_DB=student_db
 # Connecting to the local 'db' container
 DATABASE_URL=postgresql+asyncpg://postgres:password@db:5432/student_db
 
-# 🔐 2. JWT security configuration
+#  2. JWT security configuration
 SECRET_KEY=my_secret_key
 ALGORITHM=HS256
 
-# 🤖 3. AI Service Configuration
+#  3. AI Service Configuration
 # Using a local Qdrant container (on the shared network)
 QDRANT_URL=http://qdrant:6333
 QDRANT_API_KEY="" # Local Qdrant runs without auth by default
@@ -27,20 +27,20 @@ QDRANT_API_KEY="" # Local Qdrant runs without auth by default
 # Groq API Key (required for LLM processing, unless using a local LLM)
 GROQ_API_KEY=gsk_your_actual_key_here
 
-# 🌐 4. Frontend Configuration
+#  4. Frontend Configuration
 VITE_API_URL=http://localhost:8000
 ```
 
 ---
 
-## 🛠️ 2. Local `docker-compose.yml` Template
+##  2. Local `docker-compose.yml` Template
 Save this configuration as `docker-compose.yml` in the project root directory:
 
 ```yaml
 version: '3.8'
 
 services:
-  # 💾 PostgreSQL Service
+  #  PostgreSQL Service
   db:
     image: postgres:15-alpine
     container_name: fastapiapp-db
@@ -58,7 +58,7 @@ services:
       timeout: 5s
       retries: 5
 
-  # 🤖 Local Qdrant Vector Database
+  #  Local Qdrant Vector Database
   qdrant:
     image: qdrant/qdrant:latest
     container_name: fastapiapp-qdrant
@@ -69,7 +69,7 @@ services:
       - qdrant_data:/qdrant/storage  # Persistent Vector Storage
     restart: always
 
-  # ⚙️ FastAPI Backend Service
+  #  FastAPI Backend Service
   backend:
     build:
       context: ./backend
@@ -92,7 +92,7 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"  # Allows backend to reach local Ollama on host
 
-  # ⚛️ React Frontend Service (Nginx)
+  #  React Frontend Service (Nginx)
   frontend:
     build:
       context: ./frontend/talentspark
@@ -105,7 +105,7 @@ services:
     depends_on:
       - backend
 
-# 💾 Named Volumes to preserve database state
+#  Named Volumes to preserve database state
 volumes:
   postgres_data:
   qdrant_data:
@@ -113,7 +113,7 @@ volumes:
 
 ---
 
-## 🚀 3. How to Run & Verify
+##  3. How to Run & Verify
 1. **Start the containers:**
    ```bash
    docker-compose up --build
