@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 import os
 load_dotenv
 
-DATABASE_URL = os.getenv("DATABASE_URL","postgresql://postgres:postgres@localhost:5432/student_db") # postgresql://"user":"password""@"hostname":"port name"/"DB name"
+DATABASE_URL = os.getenv("DATABASE_URL") # postgresql://"user":"password""@"hostname":"port name"/"DB name"
 # Capitalize the term to make it a constant variable, so that it can be used anywhere in the code.(SQLALCHEMY_DATABASE_URL is a constant variable .)
 if DATABASE_URL.startswith("postgres://"):
     DATABASE_URL=DATABASE_URL.replace("postgres://","postgresql+asyncpg://",1)
@@ -16,7 +16,7 @@ elif DATABASE_URL.startswith("postgresql://"):
 # we split URL to remove query parameter, and pass ssl="require" instead
 if "supabase.com" in DATABASE_URL:
     DATABASE_URL=DATABASE_URL.split("?")[0]
-    engine=create_async_engine(Database_URL,echo=False,connect_args={"ssl":"require"})
+    engine=create_async_engine(DATABASE_URL,echo=False,connect_args={"ssl":"require"})
 else:
     engine=create_async_engine(DATABASE_URL,echo=False)
 SessionLocal = async_sessionmaker(autocommit=False,autoflush=False,bind=engine,class_=AsyncSession)

@@ -57,10 +57,17 @@
 - check --eg: salary>0
 - default --eg: timestamp: func.now()
 
+# mysql example
+CREATE TABLE Students(
+  Student_ID int PRIMARY KEY, 
+  LastName varchar(255) NOT NULL,
+  FirstName varchar(255)
+);
+
 # Modules
 - SQLAlchemy -- orm (object Relational mappinng)
 - fastapi -- web framework
-- uvicorn -- server for running fastapi application ---> "uvicorn app.main:app --reload"
+- uvicorn -- server for running fastapi application ---> 'uvicorn app.main:app --reload'
 - psycopg2 -- postgresql driver
 - Swagger AI -- validation of API
 - Pydantic -- Data validation
@@ -70,19 +77,24 @@
 # Concepts:
 - ORM 
     - Object Mapping -->to convert pythonm code to sql commands without writing SQL commands
+- Depends
     - Dependancy injection -->To install dependencies into router handlers
-    - Session maker - To create a session with Database
-    - SessionLocal - To create session with the database for a single request
-    - declarative_base - To create a base class for all the models
+- Session maker 
+    - To create a session with Database
+- SessionLocal 
+    - To create session with the database for a single request
+- declarative_base 
+    - To create a base class for all the models
 
 # Alembic - to modify tables or constraints of a particular table in models of postgres
 - pip install alembic
-
-- alembic -> env.py ->  from imported models -> Base.metadata data
-- alembic.ini -->  SQLALCHEMY url to postgres database 
-
 - alembic init alembic -- creates new file alembic
+
+- alembic -> env.py ->  from imported models -> metadata data
+- alembic.ini -->  SQLALCHEMY url to postgres database ---> postgresql://user:password@host:port/database_name
+
 - alembic revision --autogenerate -m "Initial migration"
+You will have a new version update with def upgrade() in that for eg:713e98317319.py before doing upgrade check that.
 - alembic upgrade head  -- to upgrade the file
 
 ## Frontend
@@ -114,12 +126,15 @@ bcrypt
 
 - pip install python-jose[cryptography]
 
-- Jose --> used to create jwt tokens --> used to suthenticate and authorize users its in the format xxxx.yyyy.zzzz basically 3 parts 
+- Jose --> used to create jwt tokens --> used to authenticate and authorize users its in the format xxxx.yyyy.zzzz basically 3 parts 
 1. header -> algo + token type: {alg:HS256, typ:JWT}
 2. payload -> data, for eg: {user_id:1, role:admin}
 3. signature -> used to clarify the token: {hash(header + payload + secretkey)}
 - access token -> used to acces protected resources
 - refresh tokens -> used to refresh access tokens
+
+
+pip install python-multipart
 
 ## Utils 
 
@@ -138,3 +153,9 @@ bcrypt
 2. access token --> get current user
 3. current user --> get role --> role_required --> access protected resources
 
+# LLM
+- pip install langchain
+- pip install langchain-community
+- pip install langchain-google-genai
+- pip install python-dotenv
+- pip install langchain-ollama -if ollama using locally

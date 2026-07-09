@@ -307,8 +307,8 @@ ChatResponse → response (str)
 
 | Method | Endpoint | Service | Memory |
 |--------|----------|---------|--------|
-| POST | `/chat/ask` | Gemini (llm_service) | ❌ No memory |
-| POST | `/chat/ask_career` | Groq/LLaMA (langchai_service) | ✅ Per-session memory |
+| POST | `/chat/ask` | Gemini (llm_service) |  No memory |
+| POST | `/chat/ask_career` | Groq/LLaMA (langchai_service) | Per-session memory |
 
 ### Environment Variables Needed
 
